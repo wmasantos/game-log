@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @Order(0)
 public class HandlingController {
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDto> generalException(Exception e){
         return new ResponseEntity<>(new ExceptionDto(1, 500, e.getLocalizedMessage(), e),
@@ -20,7 +19,7 @@ public class HandlingController {
 
     @ExceptionHandler(GameException.class)
     public ResponseEntity<ExceptionDto> customException(GameException e){
-        return new ResponseEntity<>(new ExceptionDto(2, e.getHttpStatus().value(), e.getMessage(), e),
+        return new ResponseEntity<>(new ExceptionDto(3, e.getHttpStatus().value(), e.getMessage(), e),
                 e.getHttpStatus());
     }
 }
