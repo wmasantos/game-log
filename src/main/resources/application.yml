@@ -1,2 +1,10 @@
 server:
   port: 1337
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
