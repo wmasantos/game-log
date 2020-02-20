@@ -1,0 +1,15 @@
+language: java
+dist: trusty
+jdk:
+  - oraclejdk8
+  - oraclejdk11
+os:
+  - linux
+script: "mvn clean package"
+branches:
+  except:
+    - travis
+notifications:
+  email: wagnercct2@gmail.com
+after_success:
+  - mvn clean install
