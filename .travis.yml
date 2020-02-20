@@ -3,11 +3,21 @@ dist: trusty
 jdk:
   - openjdk8
   - openjdk11
+
+addons:
+  sonarcloud:
+    organization: "wmasantosgamelog"
+    token:
+      secure: "5b20e0b736b26cdcc94bd59b435a8c3aecbb3d75"
+
+script:
+  - mvn clean package
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=wmasantos_game-log
+
 before_install:
   - chmod +x mvnw
 os:
   - linux
-script: "mvn clean package"
 branches:
   except:
     - travis

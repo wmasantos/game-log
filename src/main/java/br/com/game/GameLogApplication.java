@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -22,7 +23,7 @@ public class GameLogApplication extends SpringBootServletInitializer {
         return builder.sources(GameLogApplication.class);
     }
 
-    @RequestMapping(value = "/")
+    @RequestMapping(method = RequestMethod.GET, value = "/")
     public String healthCheck(){
         return "API ROCK's - " + new Date().toString();
     }
