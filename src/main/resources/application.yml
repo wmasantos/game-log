@@ -1,5 +1,8 @@
 server:
   port: 1337
+
+sentry.dsn: ${SENTRY_DSN:#{null}}
+
 management:
   endpoints:
     web:

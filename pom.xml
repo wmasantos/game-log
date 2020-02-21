@@ -19,6 +19,7 @@
         <jacoco.version>0.8.5</jacoco.version>
         <swagger.version>2.9.2</swagger.version>
         <bean-matchers.version>0.12</bean-matchers.version>
+        <sentry.version>1.7.16</sentry.version>
     </properties>
 
     <dependencies>
@@ -79,6 +80,12 @@
             <version>${bean-matchers.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-spring</artifactId>
+            <version>${sentry.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -112,11 +119,16 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <includes>
+                                <include>br/com/game</include>
+                            </includes>
+
                             <excludes>
-                                <exclude>br.com.game.GameLogApplication</exclude>
-                                <exclude>br.com.game.beans.*</exclude>
-                                <exclude>br.com.game.config.*</exclude>
-                                <exclude>br.com.game.handler.*</exclude>
+                                <exclude>br/com/game/GameLogApplication.java</exclude>
+                                <exclude>br/com/game/beans/*</exclude>
+                                <exclude>br/com/game/config/*</exclude>
+                                <exclude>br/com/game/handler/*</exclude>
+                                <exclude>br/com/game/exception/*</exclude>
                             </excludes>
                             <rules>
                                 <rule>
@@ -125,7 +137,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.00</minimum>
+                                            <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
