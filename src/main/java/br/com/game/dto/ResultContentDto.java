@@ -11,10 +11,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResultSimpleDto implements Serializable{
+public class ResultContentDto<T> implements Serializable {
     public static final long serialVersionUID = 1L;
 
     private int code;
     private int httpCode;
     private String message;
+    private T content;
 }

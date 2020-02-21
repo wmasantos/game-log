@@ -16,33 +16,33 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ExceptionDtoTest {
+public class ResultContentDtoTest {
 
-    private static String DEVELOPER_MESSAGE = "Jogo não encontrado";
-    private static int HTTP_CODE = 404;
-    private static int ERROR_CODE = 10;
+    private static String MESSAGE = "Jogo encontrado";
+    private static int HTTP_CODE = 200;
+    private static int ERROR_CODE = 0;
 
     @Test
     public void testMainMethods(){
-        assertThat(ExceptionDto.class, allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
+        assertThat(ResultContentDto.class, allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
                 hasValidBeanEquals(), hasValidBeanToString(), hasValidBeanHashCode()));
     }
 
     @Test
     public void testAttributeValues(){
-        ExceptionDto exceptionDto = getException();
-        assertEquals(DEVELOPER_MESSAGE, exceptionDto.getDeveloperMessage());
-        assertEquals(HTTP_CODE, exceptionDto.getHttpCode());
-        assertEquals(ERROR_CODE, exceptionDto.getErrorCode());
+        ResultContentDto<GameStatusDto> resultContentDto = getResultContentDto();
+        assertEquals(MESSAGE, resultContentDto.getMessage());
+        assertEquals(HTTP_CODE, resultContentDto.getHttpCode());
+        assertEquals(ERROR_CODE, resultContentDto.getCode());
     }
 
-    private ExceptionDto getException() {
-        return ExceptionDto
-                .builder()
-                .httpCode(404)
-                .developerMessage("Jogo não encontrado")
-                .errorCode(10)
-                .exception(new Exception("Game Not Found"))
+    private ResultContentDto<GameStatusDto> getResultContentDto() {
+        return ResultContentDto
+                .<GameStatusDto>builder()
+                .code(0)
+                .httpCode(200)
+                .message("Jogo encontrado")
+                .content(GameStatusDtoTest.getGameStatusDto())
                 .build();
     }
 }
