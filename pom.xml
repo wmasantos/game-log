@@ -124,7 +124,7 @@
                             </includes>
 
                             <excludes>
-                                <exclude>br/com/game/GameLogApplication.java</exclude>
+                                <exclude>br/com/game/GameLogApplication</exclude>
                                 <exclude>br/com/game/beans/*</exclude>
                                 <exclude>br/com/game/config/*</exclude>
                                 <exclude>br/com/game/handler/*</exclude>
@@ -137,7 +137,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.70</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

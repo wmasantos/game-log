@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class HandlingController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDto> generalException(Exception e){
-        return new ResponseEntity<>(new ExceptionDto(1, 500, e.getLocalizedMessage(), e),
+        return new ResponseEntity<>(new ExceptionDto(1, 500, e.getMessage(), e),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
