@@ -37,14 +37,15 @@ public class GameResourceTests {
     }
 
     @Test
-    @Order(0)
     public void uploadFileLog() throws Exception{
         MockMultipartFile gameLog = new MockMultipartFile("file", "game.log",
                 "text/plain", loadLogMinified());
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .multipart("/game/uploadLog")
-                .file(gameLog))
+                .file(gameLog)
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -56,7 +57,9 @@ public class GameResourceTests {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .multipart("/game/uploadLog")
-                .file(gameLog))
+                .file(gameLog)
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
@@ -66,7 +69,9 @@ public class GameResourceTests {
         checkLogExist();
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/game/v1/log"))
+                .get("/game/v1/log")
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -76,7 +81,9 @@ public class GameResourceTests {
         checkLogExist();
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/game/v2/log"))
+                .get("/game/v2/log")
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -86,7 +93,9 @@ public class GameResourceTests {
         checkLogExist();
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/game/v1/log/3"))
+                .get("/game/v1/log/3")
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -96,7 +105,9 @@ public class GameResourceTests {
         checkLogExist();
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/game/v2/log/3"))
+                .get("/game/v2/log/3")
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -106,7 +117,9 @@ public class GameResourceTests {
         checkLogExist();
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/game/v1/log/300"))
+                .get("/game/v1/log/300")
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
@@ -116,7 +129,9 @@ public class GameResourceTests {
         checkLogExist();
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/game/v2/log/300"))
+                .get("/game/v2/log/300")
+                .header("Authorization", "Basic bGFiczpkZXNhZmlv")
+                .header("Content-Type", "application/json"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
