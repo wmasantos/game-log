@@ -5,6 +5,7 @@ import br.com.game.dto.ResultContentArrayDto;
 import br.com.game.dto.ResultContentDto;
 import br.com.game.dto.ResultSimpleDto;
 import br.com.game.service.GameService;
+import br.com.game.service.impl.GameServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/game")
 @Api(value = "Game Controller")
 public class GameResource {
 
-    private GameService gameService;
+    private GameServiceImpl gameService;
 
     @Autowired
-    public GameResource(GameService gameService) {
+    public GameResource(GameServiceImpl gameService) {
         this.gameService = gameService;
     }
 
@@ -38,13 +39,11 @@ public class GameResource {
     @PostMapping(value = "/uploadLog")
     public ResponseEntity<ResultSimpleDto> uploadLog(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
-        File file = gameService.loadData(multipartFile);
+        gameService.loadData(multipartFile);
 
-        if(file != null)
-            return ResponseEntity.ok(new ResultSimpleDto(0, 200,
-                    "Upload realizado com sucesso, consulta disponível"));
-        else
-            return ResponseEntity.badRequest().body(new ResultSimpleDto(1, 400, "Falha no upload"));
+        return ResponseEntity.ok(new ResultSimpleDto(0, 200,
+                "Upload realizado com sucesso, consulta disponível"));
+
     }
 
     @ApiOperation(value = "Lista todos os logs. Método da V1")
@@ -91,6 +90,31 @@ public class GameResource {
                             .content(gameStatusDto)
                             .build()
             );
+        }
+    }
+
+    @ApiOperation(value = "Lista todos os logs. Método da V2")
+    @GetMapping("/v2/log")
+    public ResponseEntity<HashMap<String, GameStatusDto>> getV2() throws IOException {
+
+        HashMap<String, GameStatusDto> resultContent = gameService.getWithHash(GameService.FILE_NAME);
+
+        return ResponseEntity.ok(resultContent);
+    }
+
+    @ApiOperation(value = "Detalha um jogo informando o numero do jogo como parametro no path. Método da V2")
+    @GetMapping("/v2/log/{game}")
+    public ResponseEntity<HashMap<String, GameStatusDto>> getV2(@PathVariable("game") Integer game) throws IOException{
+
+        GameStatusDto gameStatusDto = gameService.getGameById(game);
+
+        if(gameStatusDto == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            HashMap<String, GameStatusDto> map = new HashMap<>();
+            map.put(gameStatusDto.getGameName(), gameStatusDto);
+
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
 }

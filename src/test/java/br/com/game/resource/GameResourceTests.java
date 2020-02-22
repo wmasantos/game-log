@@ -1,6 +1,7 @@
 package br.com.game.resource;
 
 import br.com.game.service.GameService;
+import br.com.game.service.impl.GameServiceImpl;
 import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class GameResourceTests {
     private GameResource gameResource;
 
     @Autowired
-    private GameService gameService;
+    private GameServiceImpl gameService;
 
     @Before
     public void setUp() {
@@ -71,11 +72,31 @@ public class GameResourceTests {
     }
 
     @Test
-    public void getGameByNameV1() throws Exception {
+    public void getAllLogsV2() throws Exception {
+        checkLogExist();
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/game/v2/log"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void getGameByIdV1() throws Exception {
         checkLogExist();
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/game/v1/log/3"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void getGameByIdV2() throws Exception {
+        checkLogExist();
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/game/v2/log/3"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -86,6 +107,16 @@ public class GameResourceTests {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/game/v1/log/300"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void gameNotFoundV2() throws Exception {
+        checkLogExist();
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/game/v2/log/300"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }

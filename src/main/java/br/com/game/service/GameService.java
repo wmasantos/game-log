@@ -118,6 +118,22 @@ public class GameService implements GameServiceImpl {
         return gameStatusDtoList.isEmpty() ? null : gameStatusDtoList.get(0);
     }
 
+    @Override
+    public HashMap<String, GameStatusDto> getWithHash(String file) throws IOException{
+        List<GameStatusDto> gameStatusEntities = gameBuild(file);
+
+        HashMap<String, GameStatusDto> res = new HashMap<>();
+
+        int games = 0;
+
+        for(GameStatusDto game: gameStatusEntities){
+            games++;
+            res.put("game_" + games, game);
+        }
+
+        return res;
+    }
+
     private void initMathers(){
         Pattern pClient = Pattern.compile("\\w*(ClientUserinfoChanged)\\w*");
         mClient = pClient.matcher("");
