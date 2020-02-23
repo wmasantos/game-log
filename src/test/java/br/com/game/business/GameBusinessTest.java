@@ -1,10 +1,9 @@
-package br.com.game.service;
+package br.com.game.business;
 
 import br.com.game.dto.GameStatusDto;
 import com.google.common.io.Files;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -15,22 +14,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GameServiceTest {
+public class GameBusinessTest {
     @Autowired
-    private GameService gameService;
+    private GameBusiness gameBusiness;
 
     @Test
     public void parseLog() throws Exception {
-        assertFalse(gameService.gameBuild("gameMinified.log").isEmpty());
+        assertFalse(gameBusiness.gameBuild("gameMinified.log").isEmpty());
     }
 
     @Test(expected = IOException.class)
     public void parseLogWithIncoorrectFile() throws IOException{
-        gameService.gameBuild("error.log");
+        gameBusiness.gameBuild("error.log");
     }
 
     @Test
@@ -38,7 +36,7 @@ public class GameServiceTest {
         MockMultipartFile gameLog = new MockMultipartFile("file", "game.log",
                 "text/plain", loadLogMinified());
 
-        File file = gameService.loadData(gameLog);
+        File file = gameBusiness.loadData(gameLog);
 
         assertTrue("game.log existe?", file.exists());
     }
@@ -48,9 +46,9 @@ public class GameServiceTest {
         MockMultipartFile gameLog = new MockMultipartFile("file", "game.log",
                 "text/plain", loadLogMinified());
 
-        File file = gameService.loadData(gameLog);
+        File file = gameBusiness.loadData(gameLog);
 
-        GameStatusDto gameStatusDto = gameService.getGameById(1);
+        GameStatusDto gameStatusDto = gameBusiness.getGameById(1);
 
         assertTrue("game.log existe?", file.exists());
         assertNotNull("Um jogo foi encontrado?", gameStatusDto);

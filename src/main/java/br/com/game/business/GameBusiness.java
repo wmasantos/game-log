@@ -1,7 +1,7 @@
-package br.com.game.service;
+package br.com.game.business;
 
 import br.com.game.dto.GameStatusDto;
-import br.com.game.service.impl.GameServiceImpl;
+import br.com.game.business.impl.GameBusinessImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,14 +19,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
-public class GameService implements GameServiceImpl {
+public class GameBusiness implements GameBusinessImpl {
     public static final String FILE_NAME = "game.log";
     private static final String WORLD = "<world>";
 
     private Matcher mClient, mInitGame, mEndGame, mKill;
 
     @Override
-    public File loadData(MultipartFile multipartFile) throws IOException {
+    public File loadData(final MultipartFile multipartFile) throws IOException {
 
         File file = new File(FILE_NAME);
 
@@ -55,7 +55,7 @@ public class GameService implements GameServiceImpl {
         final List<GameStatusDto> gameStatusDtoList = new ArrayList<>();
         GameStatusDto gameStatusDto = null;
 
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        final BufferedReader br = new BufferedReader(new FileReader(file));
 
         initMathers();
 
@@ -91,7 +91,7 @@ public class GameService implements GameServiceImpl {
             }
             else if(mKill.find()){
                 totalKills++;
-                if(line.contains(GameService.WORLD)) {
+                if(line.contains(GameBusiness.WORLD)) {
                     String name = getplayerKilled(line);
                     int kill = gameStatusDto.getKills().get(name);
                     gameStatusDto.getKills().put(name, kill-1);
@@ -110,7 +110,7 @@ public class GameService implements GameServiceImpl {
 
     @Override
     public GameStatusDto getGameById(final Integer gameId) throws IOException{
-        List<GameStatusDto> gameStatusDtoList = gameBuild(GameService.FILE_NAME).stream()
+        List<GameStatusDto> gameStatusDtoList = gameBuild(GameBusiness.FILE_NAME).stream()
                 .filter(
                         gameStatus -> gameStatus.getGameName().equals("game_" + gameId))
                 .collect(Collectors.toList());
@@ -119,8 +119,8 @@ public class GameService implements GameServiceImpl {
     }
 
     @Override
-    public HashMap<String, GameStatusDto> getWithHash(String file) throws IOException{
-        List<GameStatusDto> gameStatusEntities = gameBuild(file);
+    public HashMap<String, GameStatusDto> getWithHash(final String file) throws IOException{
+        final List<GameStatusDto> gameStatusEntities = gameBuild(file);
 
         HashMap<String, GameStatusDto> res = new HashMap<>();
 
@@ -159,21 +159,21 @@ public class GameService implements GameServiceImpl {
         return totalGames;
     }
 
-    private String getplayer(String line){
+    private String getplayer(final String line){
         int index1 = line.indexOf("n\\");
         int index2 = line.indexOf("\\t");
 
         return line.substring(index1+2, index2);
     }
 
-    private String getplayerKilled(String line){
+    private String getplayerKilled(final String line){
         int index1 = line.indexOf("killed ");
         int index2 = line.indexOf(" by");
 
         return line.substring(index1+7, index2);
     }
 
-    private String getplayerKiller(String line){
+    private String getplayerKiller(final String line){
         int index1 = line.lastIndexOf(": ");
         int index2 = line.indexOf(" killed");
 

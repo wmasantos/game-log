@@ -1,5 +1,6 @@
 package br.com.game.beans;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,6 +15,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger extends WebMvcConfigurationSupport {
+
+    @Value("${swagger.version}")
+    private String version;
+
     @Bean
     public Docket greetingApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -21,14 +26,13 @@ public class Swagger extends WebMvcConfigurationSupport {
                 .apis(RequestHandlerSelectors.basePackage("br.com.game.resource"))
                 .build()
                 .apiInfo(metaData());
-
     }
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
                 .title("Quake 3 Arena Logs")
                 .description("API de consulta de logs Quake 3 Arena")
-                .version("1.0.0")
+                .version(version)
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
                 .build();

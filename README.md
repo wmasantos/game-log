@@ -68,7 +68,7 @@ http://localhost:1337/swagger-ui.html
 <img src="https://github.com/wmasantos/game-log/blob/master/Swagger.jpg"/>  
   
 ## 4 - Observação  
-Ao analizar a quantidade de endpoints, será percebido que nos métodos de listagem full e listagem pelo número do jogo, existem 2 versões de cada, ou seja, v1 e v2. Os métodos apresentados por V1 retornam a forma como me senti bem trabalhando no retorno dos resultados, já os métodos da V2 retornam da forma como foi solicitado no enunciado do desafio. Tomei essa liberdade de alteração devido à sugestão no **item 6**:<br>  
+Ao analisar a quantidade de endpoints, será percebido que nos métodos de listagem full e listagem pelo número do jogo, existem 2 versões de cada, ou seja, v1 e v2. Os métodos apresentados por V1 retornam a forma como me senti bem trabalhando no retorno dos resultados, já os métodos da V2 retornam da forma como foi solicitado no enunciado do desafio. Tomei essa liberdade de alteração devido à sugestão no **item 6**:<br>  
   
 **"6. Siga o que considera boas práticas de programação, coisas que um bom desenvolvedor olhe no seu código e não ache "feio" ou "ruim"."**  
   

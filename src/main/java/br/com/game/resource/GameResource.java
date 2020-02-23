@@ -4,8 +4,8 @@ import br.com.game.dto.GameStatusDto;
 import br.com.game.dto.ResultContentArrayDto;
 import br.com.game.dto.ResultContentDto;
 import br.com.game.dto.ResultSimpleDto;
-import br.com.game.service.GameService;
-import br.com.game.service.impl.GameServiceImpl;
+import br.com.game.business.GameBusiness;
+import br.com.game.business.impl.GameBusinessImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +27,18 @@ import java.util.List;
 @Api(value = "Game Controller")
 public class GameResource {
 
-    private GameServiceImpl gameService;
+    private GameBusinessImpl gameBusiness;
 
     @Autowired
-    public GameResource(GameServiceImpl gameService) {
-        this.gameService = gameService;
+    public GameResource(GameBusinessImpl gameBusiness) {
+        this.gameBusiness = gameBusiness;
     }
 
     @ApiOperation(value = "Upload do arquivo de log")
     @PostMapping(value = "/uploadLog")
     public ResponseEntity<ResultSimpleDto> uploadLog(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
-        gameService.loadData(multipartFile);
+        gameBusiness.loadData(multipartFile);
 
         return ResponseEntity.ok(new ResultSimpleDto(0, 200,
                 "Upload realizado com sucesso, consulta disponível"));
@@ -49,7 +49,7 @@ public class GameResource {
     @GetMapping("/v1/log")
     public ResponseEntity<ResultContentArrayDto<GameStatusDto>> getV1() throws IOException {
 
-        List<GameStatusDto> gameStatusDtoList = gameService.gameBuild(GameService.FILE_NAME);
+        List<GameStatusDto> gameStatusDtoList = gameBusiness.gameBuild(GameBusiness.FILE_NAME);
 
         return ResponseEntity.ok(
                 ResultContentArrayDto
@@ -66,7 +66,7 @@ public class GameResource {
     @GetMapping("/v1/log/{game}")
     public ResponseEntity<ResultContentDto<GameStatusDto>>getByGameV1(@PathVariable("game") Integer game) throws IOException {
 
-        GameStatusDto gameStatusDto = gameService.getGameById(game);
+        GameStatusDto gameStatusDto = gameBusiness.getGameById(game);
 
         if(gameStatusDto == null) {
             return ResponseEntity
@@ -96,16 +96,16 @@ public class GameResource {
     @GetMapping("/v2/log")
     public ResponseEntity<HashMap<String, GameStatusDto>> getV2() throws IOException {
 
-        HashMap<String, GameStatusDto> resultContent = gameService.getWithHash(GameService.FILE_NAME);
+        HashMap<String, GameStatusDto> resultContent = gameBusiness.getWithHash(GameBusiness.FILE_NAME);
 
         return ResponseEntity.ok(resultContent);
     }
 
     @ApiOperation(value = "Detalha um jogo informando o numero do jogo como parametro no path. Método da V2")
     @GetMapping("/v2/log/{game}")
-    public ResponseEntity<HashMap<String, GameStatusDto>> getV2(@PathVariable("game") Integer game) throws IOException{
+    public ResponseEntity<HashMap<String, GameStatusDto>> getByGameV2(@PathVariable("game") Integer game) throws IOException{
 
-        GameStatusDto gameStatusDto = gameService.getGameById(game);
+        GameStatusDto gameStatusDto = gameBusiness.getGameById(game);
 
         if(gameStatusDto == null) {
             return ResponseEntity.notFound().build();

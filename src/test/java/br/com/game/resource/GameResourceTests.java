@@ -1,14 +1,13 @@
 package br.com.game.resource;
 
-import br.com.game.service.GameService;
-import br.com.game.service.impl.GameServiceImpl;
+import br.com.game.business.GameBusiness;
+import br.com.game.business.impl.GameBusinessImpl;
 import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.annotation.Order;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,7 +28,7 @@ public class GameResourceTests {
     private GameResource gameResource;
 
     @Autowired
-    private GameServiceImpl gameService;
+    private GameBusinessImpl gameBusiness;
 
     @Before
     public void setUp() {
@@ -142,13 +141,13 @@ public class GameResourceTests {
     }
 
     public boolean checkLogExist() throws IOException {
-        File file = new File(GameService.FILE_NAME);
+        File file = new File(GameBusiness.FILE_NAME);
 
         if (!file.exists()) {
             MockMultipartFile gameLog = new MockMultipartFile("file", "game.log",
                     "text/plain", loadLogMinified());
 
-            File fileResult = gameService.loadData(gameLog);
+            File fileResult = gameBusiness.loadData(gameLog);
 
             return fileResult.exists();
         }

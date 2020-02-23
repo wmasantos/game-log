@@ -3,6 +3,8 @@ server:
 
 sentry.dsn: ${SENTRY_DSN:#{null}}
 
+swagger.version: "1.0.0"
+
 management:
   endpoints:
     web:
