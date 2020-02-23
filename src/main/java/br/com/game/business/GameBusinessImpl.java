@@ -1,4 +1,4 @@
-package br.com.game.business.impl;
+package br.com.game.business;
 
 import br.com.game.dto.GameStatusDto;
 import org.springframework.web.multipart.MultipartFile;

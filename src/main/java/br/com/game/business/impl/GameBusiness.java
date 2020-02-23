@@ -1,7 +1,7 @@
-package br.com.game.business;
+package br.com.game.business.impl;
 
+import br.com.game.business.GameBusinessImpl;
 import br.com.game.dto.GameStatusDto;
-import br.com.game.business.impl.GameBusinessImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,18 +86,18 @@ public class GameBusiness implements GameBusinessImpl {
                 initGame = false;
             }
             else if(mClient.find()){
-                gameStatusDto.getPlayers().add(getplayer(line));
-                gameStatusDto.getKills().putIfAbsent(getplayer(line), 0);
+                gameStatusDto.getPlayers().add(getPlayer(line));
+                gameStatusDto.getKills().putIfAbsent(getPlayer(line), 0);
             }
             else if(mKill.find()){
                 totalKills++;
                 if(line.contains(GameBusiness.WORLD)) {
-                    String name = getplayerKilled(line);
+                    String name = getPlayerKilled(line);
                     int kill = gameStatusDto.getKills().get(name);
                     gameStatusDto.getKills().put(name, kill-1);
                 }
                 else {
-                    String killer = getplayerKiller(line);
+                    String killer = getPlayerKiller(line);
                     int kill = gameStatusDto.getKills().get(killer);
                     gameStatusDto.getKills().put(killer, kill+1);
                 }
@@ -159,21 +159,21 @@ public class GameBusiness implements GameBusinessImpl {
         return totalGames;
     }
 
-    private String getplayer(final String line){
+    private String getPlayer(final String line){
         int index1 = line.indexOf("n\\");
         int index2 = line.indexOf("\\t");
 
         return line.substring(index1+2, index2);
     }
 
-    private String getplayerKilled(final String line){
+    private String getPlayerKilled(final String line){
         int index1 = line.indexOf("killed ");
         int index2 = line.indexOf(" by");
 
         return line.substring(index1+7, index2);
     }
 
-    private String getplayerKiller(final String line){
+    private String getPlayerKiller(final String line){
         int index1 = line.lastIndexOf(": ");
         int index2 = line.indexOf(" killed");
 

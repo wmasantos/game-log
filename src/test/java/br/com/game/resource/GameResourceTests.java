@@ -1,7 +1,7 @@
 package br.com.game.resource;
 
-import br.com.game.business.GameBusiness;
-import br.com.game.business.impl.GameBusinessImpl;
+import br.com.game.business.impl.GameBusiness;
+import br.com.game.business.GameBusinessImpl;
 import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,5 +1,6 @@
 package br.com.game.business;
 
+import br.com.game.business.impl.GameBusiness;
 import br.com.game.dto.GameStatusDto;
 import com.google.common.io.Files;
 import org.junit.Test;
