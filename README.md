@@ -1,5 +1,6 @@
-<img src="https://github.com/wmasantos/game-log/blob/master/Quake.png"/>
-# Quake log parser API  
+# Quake log parser API
+
+<img src="https://github.com/wmasantos/game-log/blob/master/Quake.jpeg"/>
   
 ## 1 - Solução proposta  
   
