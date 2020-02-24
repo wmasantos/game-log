@@ -1,3 +1,4 @@
+<img src="https://github.com/wmasantos/game-log/blob/master/Quake.png"/>
 # Quake log parser API  
   
 ## 1 - Solução proposta  
