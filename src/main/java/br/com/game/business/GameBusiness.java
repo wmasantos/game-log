@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public interface GameBusinessImpl {
+public interface GameBusiness {
     File loadData(MultipartFile multipartFile) throws IOException;
     List<GameStatusDto> gameBuild(String fileName) throws IOException;
     GameStatusDto getGameById(Integer gameId) throws IOException;

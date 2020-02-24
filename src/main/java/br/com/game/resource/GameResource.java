@@ -4,8 +4,8 @@ import br.com.game.dto.GameStatusDto;
 import br.com.game.dto.ResultContentArrayDto;
 import br.com.game.dto.ResultContentDto;
 import br.com.game.dto.ResultSimpleDto;
-import br.com.game.business.impl.GameBusiness;
-import br.com.game.business.GameBusinessImpl;
+import br.com.game.business.impl.GameBusinessImpl;
+import br.com.game.business.GameBusiness;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,10 @@ import java.util.List;
 @Api(value = "Game Controller")
 public class GameResource {
 
-    private GameBusinessImpl gameBusiness;
+    private GameBusiness gameBusiness;
 
     @Autowired
-    public GameResource(GameBusinessImpl gameBusiness) {
+    public GameResource(GameBusiness gameBusiness) {
         this.gameBusiness = gameBusiness;
     }
 
@@ -49,7 +49,7 @@ public class GameResource {
     @GetMapping("/v1/log")
     public ResponseEntity<ResultContentArrayDto<GameStatusDto>> getV1() throws IOException {
 
-        List<GameStatusDto> gameStatusDtoList = gameBusiness.gameBuild(GameBusiness.FILE_NAME);
+        List<GameStatusDto> gameStatusDtoList = gameBusiness.gameBuild(GameBusinessImpl.FILE_NAME);
 
         return ResponseEntity.ok(
                 ResultContentArrayDto
@@ -96,7 +96,7 @@ public class GameResource {
     @GetMapping("/v2/log")
     public ResponseEntity<HashMap<String, GameStatusDto>> getV2() throws IOException {
 
-        HashMap<String, GameStatusDto> resultContent = gameBusiness.getWithHash(GameBusiness.FILE_NAME);
+        HashMap<String, GameStatusDto> resultContent = gameBusiness.getWithHash(GameBusinessImpl.FILE_NAME);
 
         return ResponseEntity.ok(resultContent);
     }

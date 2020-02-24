@@ -1,6 +1,6 @@
 package br.com.game.business.impl;
 
-import br.com.game.business.GameBusinessImpl;
+import br.com.game.business.GameBusiness;
 import br.com.game.dto.GameStatusDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
-public class GameBusiness implements GameBusinessImpl {
+public class GameBusinessImpl implements GameBusiness {
     public static final String FILE_NAME = "game.log";
     private static final String WORLD = "<world>";
 
@@ -91,7 +91,7 @@ public class GameBusiness implements GameBusinessImpl {
             }
             else if(mKill.find()){
                 totalKills++;
-                if(line.contains(GameBusiness.WORLD)) {
+                if(line.contains(GameBusinessImpl.WORLD)) {
                     String name = getPlayerKilled(line);
                     int kill = gameStatusDto.getKills().get(name);
                     gameStatusDto.getKills().put(name, kill-1);
@@ -110,7 +110,7 @@ public class GameBusiness implements GameBusinessImpl {
 
     @Override
     public GameStatusDto getGameById(final Integer gameId) throws IOException{
-        List<GameStatusDto> gameStatusDtoList = gameBuild(GameBusiness.FILE_NAME).stream()
+        List<GameStatusDto> gameStatusDtoList = gameBuild(GameBusinessImpl.FILE_NAME).stream()
                 .filter(
                         gameStatus -> gameStatus.getGameName().equals("game_" + gameId))
                 .collect(Collectors.toList());

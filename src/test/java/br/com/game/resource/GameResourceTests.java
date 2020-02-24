@@ -1,7 +1,7 @@
 package br.com.game.resource;
 
-import br.com.game.business.impl.GameBusiness;
-import br.com.game.business.GameBusinessImpl;
+import br.com.game.business.impl.GameBusinessImpl;
+import br.com.game.business.GameBusiness;
 import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class GameResourceTests {
     private GameResource gameResource;
 
     @Autowired
-    private GameBusinessImpl gameBusiness;
+    private GameBusiness gameBusiness;
 
     @Before
     public void setUp() {
@@ -141,7 +141,7 @@ public class GameResourceTests {
     }
 
     public boolean checkLogExist() throws IOException {
-        File file = new File(GameBusiness.FILE_NAME);
+        File file = new File(GameBusinessImpl.FILE_NAME);
 
         if (!file.exists()) {
             MockMultipartFile gameLog = new MockMultipartFile("file", "game.log",
