@@ -10,7 +10,7 @@ pipeline {
 
       }
       steps {
-        sh 'echo "TESTING APPLICATION" && mvn --version'
+        sh 'echo "TESTING APPLICATION" && sudo chmod 777 mvnw && sudo chown $USER mvnw &&mvn --version'
       }
     }
 
