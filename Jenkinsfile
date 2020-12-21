@@ -4,7 +4,7 @@ pipeline {
     stage('TEST') {
       agent any
       steps {
-        sh 'echo "TESTING APPLICATION" && ./mvnw --version'
+        sh 'echo "TESTING APPLICATION" &&  chown jenkins mvnw && ./mvnw --version'
       }
     }
 
