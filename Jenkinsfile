@@ -18,7 +18,9 @@ pipeline {
 
         stage('SonarQube Test') {
           steps {
-            sh './mvnw  sonar:sonar -Dsonar.host.url=http://192.168.35.116:9000 -Dlicense.skip=true'
+            sh '''./mvnw  sonar:sonar -Dsonar.projectKey=game-log-sonarqb 
+  -Dsonar.host.url=http://192.168.35.116:9000 
+  -Dsonar.login=8cfd702b6cf5dcea3db5de5bc81c7938daeda711'''
           }
         }
 
