@@ -28,6 +28,7 @@ pipeline {
     stage('Finish') {
       steps {
         echo 'Finish JOB'
+        slackSend(channel: 'deploy-ti', color: '#00FF00', message: 'Testando')
       }
     }
 
