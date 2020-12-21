@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       agent any
       steps {
-        slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Building Project ${env.JOB_NAME}")
+        slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Start Building Project ${env.JOB_NAME}")
         sh 'echo "BUILDING APPLICATION" &&  chmod 777 mvnw &&  ./mvnw --version && ./mvnw install -DskipTests'
       }
     }
@@ -35,9 +35,9 @@ pipeline {
       }
     }
 
-    stage('Choose') {
+    stage('Docker Image') {
       steps {
-        input(message: 'DISGRAÇA', id: 'teste', ok: 'enviar')
+        sh 'docker build -f Dockerfile -t game-logs . '
       }
     }
 
