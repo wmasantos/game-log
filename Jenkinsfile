@@ -4,7 +4,7 @@ pipeline {
     stage('TEST') {
       agent any
       steps {
-        sh 'echo "TESTING APPLICATION" && sudo chmod 777 mvnw && sudo chown $USER mvnw &&mvn --version'
+        sh 'echo "TESTING APPLICATION" && chmod 777 mvnw &&  chown $USER mvnw && mvn --version'
       }
     }
 
