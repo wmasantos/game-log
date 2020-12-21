@@ -27,7 +27,6 @@ pipeline {
 
     stage('Finish') {
       steps {
-        build 'Free'
         echo 'Finish JOB'
       }
     }
