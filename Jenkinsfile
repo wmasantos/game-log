@@ -35,5 +35,15 @@ pipeline {
       }
     }
 
+    stage('Choose') {
+      steps {
+        waitUntil(initialRecurrencePeriod: 1) {
+          echo 'teste'
+          echo 'message2'
+        }
+
+      }
+    }
+
   }
 }
