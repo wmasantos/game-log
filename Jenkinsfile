@@ -47,8 +47,10 @@ pipeline {
 
     stage('Confirm QA') {
       steps {
-        gmud = input(message: 'What\'s GMUD?', id: 'GMUD', ok: 'Enviar', submitter: 'GMUD-123')
-        echo ("GMUD: " + gmud)
+        script{
+          gmud = input(message: 'What\'s GMUD?', id: 'GMUD', ok: 'Enviar', submitter: 'GMUD-123')
+          echo ("GMUD: " + gmud)
+        }
       }
     }
 
