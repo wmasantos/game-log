@@ -24,22 +24,17 @@ pipeline {
             sh './mvnw  sonar:sonar -Dsonar.projectKey=game-log-sonarqb -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=8cfd702b6cf5dcea3db5de5bc81c7938daeda711'
           }
         }
-
       }
     }
-
-    stage('Finish') {
-      steps {
-        echo 'Finish JOB'
+  }
+  post {
+      success {
+        echo 'Pipeline executed with success'
         slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Job ${env.JOB_NAME} finished! :rocket:")
       }
-    }
-
-    stage('Docker Image') {
-      steps {
-        sh 'docker build -f Dockerfile -t game-logs . '
+      failure {
+        echo 'An error occur during the build process.'
+        slackSend(channel: 'deploy-ti', color: '#FF0000', message: "Job ${env.JOB_NAME} finished with error :scream:")
       }
     }
-
-  }
 }
