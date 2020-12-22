@@ -32,11 +32,11 @@ pipeline {
         echo 'Pipeline checks finished'
         //input(message: 'Proceed do TI?', id: 'TI', ok: 'Yes')
         script {
-            def userInput = input(message: 'Proceed to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+            def userInput = input(message: 'Proceed to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: 'Please confirm you agree with this', name: 'conf']])
 
-            echo userInput['Please confirm you agree with this']
+            echo userInput['conf']
 
-            if(userInput) {
+            if(userInput['conf']) {
                 echo 'PROCEED'
             }
             else {
