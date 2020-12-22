@@ -31,7 +31,7 @@ pipeline {
       steps {
         echo 'Pipeline checks finished'
         script {
-            def userInput = input(message: 'Proceed deploy to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+            userInput = input(message: 'Proceed deploy to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
 
             if (userInput) {
                 echo ("IQA Sheet Path: "+userInput)
@@ -42,6 +42,15 @@ pipeline {
         }
       }
     }
+
+   stage('Deploy TI') {
+     when {
+       expression { userInput == true }
+     }
+     steps {
+       slackSend(channel: 'deploy-ti', color: '#0000FF', message: "Starting deploy in TI")
+     }
+   }
 
     stage('Confirm QA') {
       steps {
