@@ -34,6 +34,11 @@ pipeline {
         slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Job ${env.JOB_NAME} finished! :rocket:")
       }
     }
+    
+    stage('Initialize Docker'){
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
 
     stage('Docker Image') {
       steps {
