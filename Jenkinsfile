@@ -31,26 +31,31 @@ pipeline {
       steps {
         echo 'Pipeline checks environments'
         script {
-            userInput = input(message: 'Proceed deploy to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+          userInput = input(message: 'Proceed deploy to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
         }
+
       }
     }
 
-   stage('Deploy TI') {
-     when {
-       expression { userInput == true }
-     }
-     steps {
-       slackSend(channel: 'deploy-ti', color: '#0000FF', message: "Starting deploy in TI - ${currentBuild.fullDisplayName} :crossed-fingers:")
-     }
-   }
+    stage('Deploy TI') {
+      when {
+        expression {
+          userInput == true
+        }
+
+      }
+      steps {
+        slackSend(channel: 'deploy-ti', color: '#0000FF', message: "Starting deploy in TI - ${currentBuild.fullDisplayName} :crossed_fingers:")
+      }
+    }
 
     stage('Confirm QA') {
       steps {
-        script{
+        script {
           gmud = input(message: 'What\'s GMUD?', id: 'GMUD', ok: 'Enviar', submitter: 'GMUD-123')
           echo ("GMUD: " + gmud)
         }
+
       }
     }
 
