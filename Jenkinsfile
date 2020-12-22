@@ -32,17 +32,14 @@ pipeline {
         echo 'Pipeline checks finished'
         //input(message: 'Proceed do TI?', id: 'TI', ok: 'Yes')
         script {
-            def userInput = input(message: 'Proceed to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: 'Please confirm you agree with this', name: 'conf']])
-
-            echo userInput['conf']
-
-            if(userInput['conf']) {
-                echo 'PROCEED'
-            }
-            else {
-                echo 'NOT PROCEED'
-                error 'PIPE SCAPE'
-            }
+            def userInput = input(
+                             id: 'userInput', message: 'Enter path of test reports:?',
+                             parameters: [
+                             [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Path of config file', name: 'Config'],
+                             [$class: 'TextParameterDefinition', defaultValue: 'None', description: 'Test Info file', name: 'Test']
+                            ])
+            echo ("IQA Sheet Path: "+userInput['Config'])
+            echo ("Test Info file path: "+userInput['Test'])
         }
       }
     }
