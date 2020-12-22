@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        slackSend(channel: 'deploy-ti', color: '#00FF00', message: "The Pipeline ${currentBuild.fullDisplayName} has been started, keep your :eyes: on it... Building Project ${env.JOB_NAME}")
+        slackSend(channel: 'deploy-ti', color: '#00FF00', message: "The Pipeline ${currentBuild.fullDisplayName} has been started, keep your :eyes: on it... Building Project")
         sh 'echo "BUILDING APPLICATION" &&  chmod 777 mvnw &&  ./mvnw --version && ./mvnw install -DskipTests'
       }
     }
@@ -12,14 +12,14 @@ pipeline {
       parallel {
         stage('Unit Test') {
           steps {
-            slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Starting unit tests from ${currentBuild.fullDisplayName}/${env.JOB_NAME}")
+            slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Starting unit tests from ${currentBuild.fullDisplayName}")
             sh 'echo "TESTING APPLICATION" &&  chmod 777 mvnw &&  ./mvnw --version && ./mvnw test'
           }
         }
 
         stage('SonarQube Test') {
           steps {
-            slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Starting sonar tests from ${currentBuild.fullDisplayName}/${env.JOB_NAME}")
+            slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Starting sonar tests from ${currentBuild.fullDisplayName}")
             sh './mvnw  sonar:sonar -Dsonar.projectKey=game-log-sonarqb -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=8cfd702b6cf5dcea3db5de5bc81c7938daeda711'
           }
         }
@@ -41,7 +41,7 @@ pipeline {
        expression { userInput == true }
      }
      steps {
-       slackSend(channel: 'deploy-ti', color: '#0000FF', message: "Starting deploy in TI - ${currentBuild.fullDisplayName}/${env.JOB_NAME} :crossed-fingers:")
+       slackSend(channel: 'deploy-ti', color: '#0000FF', message: "Starting deploy in TI - ${currentBuild.fullDisplayName} :crossed-fingers:")
      }
    }
 
