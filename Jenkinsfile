@@ -34,6 +34,8 @@ pipeline {
         script {
             def userInput = input(message: 'Proceed to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
 
+            echo userInput['Please confirm you agree with this']
+
             if(userInput) {
                 echo 'PROCEED'
             }
