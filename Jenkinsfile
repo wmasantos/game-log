@@ -23,23 +23,35 @@ pipeline {
             sh './mvnw  sonar:sonar -Dsonar.projectKey=game-log-sonarqb -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=8cfd702b6cf5dcea3db5de5bc81c7938daeda711'
           }
         }
+
       }
     }
 
     stage('Finish') {
       steps {
         echo 'Pipeline finished'
+        input(message: 'Proced do QA?', id: 'QA', ok: 'Yes')
       }
     }
+
+    stage('Confirm QA') {
+      steps {
+        input(message: 'What\'s GMUD?', id: 'GMUD', ok: 'Enviar', submitter: 'GMUD-123')
+        error 'GMUD not found'
+      }
+    }
+
   }
   post {
-      success {
-        echo 'Pipeline executed with success'
-        slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Job ${env.JOB_NAME} finished! :rocket:")
-      }
-      failure {
-        echo 'An error occur during the build process.'
-        slackSend(channel: 'deploy-ti', color: '#FF0000', message: "Job ${env.JOB_NAME} finished with error :scream:")
-      }
+    success {
+      echo 'Pipeline executed with success'
+      slackSend(channel: 'deploy-ti', color: '#00FF00', message: "Job ${env.JOB_NAME} finished! :rocket:")
     }
+
+    failure {
+      echo 'An error occur during the build process.'
+      slackSend(channel: 'deploy-ti', color: '#FF0000', message: "Job ${env.JOB_NAME} finished with error :scream:")
+    }
+
+  }
 }
