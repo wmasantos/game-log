@@ -30,7 +30,15 @@ pipeline {
     stage('Confirm TI') {
       steps {
         echo 'Pipeline checks finished'
-        input(message: 'Proceed do TI?', id: 'TI', ok: 'Yes')
+        //input(message: 'Proceed do TI?', id: 'TI', ok: 'Yes')
+        def userInput = input(message: 'Proceed to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+        if(userInput) {
+            echo 'PROCEED'
+        }
+        else {
+            echo 'NOT PROCEED'
+            error 'PIPE SCAPE'
+        }
       }
     }
 
