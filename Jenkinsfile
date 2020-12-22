@@ -30,15 +30,15 @@ pipeline {
     stage('Confirm TI') {
       steps {
         echo 'Pipeline checks finished'
-        //input(message: 'Proceed do TI?', id: 'TI', ok: 'Yes')
         script {
-            def userInput = input(message: 'Was this successful?', parameters: [
-                                  [$class: 'BooleanParameterDefinition', defaultValue: true, description: '',
-                                  name: 'Please confirm you agree with this']
-                                           ])
+            def userInput = input(message: 'Proceed deploy to TI?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
 
-            echo ("IQA Sheet Path: "+userInput)
-            echo ("Test Info file path: "+userInput)
+            if (userInput) {
+                echo ("IQA Sheet Path: "+userInput)
+            }
+            else {
+                echo ("Test Info file path: "+userInput)
+            }
         }
       }
     }
@@ -46,7 +46,7 @@ pipeline {
     stage('Confirm QA') {
       steps {
         input(message: 'What\'s GMUD?', id: 'GMUD', ok: 'Enviar', submitter: 'GMUD-123')
-        error 'GMUD not found'
+        //error 'GMUD not found'
       }
     }
 
