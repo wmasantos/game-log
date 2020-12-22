@@ -27,10 +27,10 @@ pipeline {
       }
     }
 
-    stage('Finish') {
+    stage('Confirm TI') {
       steps {
-        echo 'Pipeline finished'
-        input(message: 'Proced do QA?', id: 'QA', ok: 'Yes')
+        echo 'Pipeline checks finished'
+        input(message: 'Proceed do TI?', id: 'TI', ok: 'Yes')
       }
     }
 
